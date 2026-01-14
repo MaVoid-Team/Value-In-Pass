@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Navigation } from "@/components/navigation"
 import { ScrollAnimation } from "@/components/scroll-animation"
+import { EventCarousel } from "@/components/event-carousel"
 
 export default function Home() {
   return (
@@ -8,25 +9,21 @@ export default function Home() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative w-full h-screen flex items-center justify-center">
+      <section className="relative w-full h-screen flex items-center justify-center pt-20">
         <div className="absolute inset-0 -z-10">
-          <img
-            src="/luxury-tent-event-setup-elegant.jpg"
-            alt="Luxury tent event setup"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/40"></div>
+          <img src="/hero-luxury-events.jpg" alt="Luxury tent event setup" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-black/50"></div>
         </div>
 
         <div className="max-w-4xl mx-auto px-6 text-center">
           <ScrollAnimation type="fadeIn">
-            <h1 className="font-serif text-5xl md:text-7xl font-bold leading-tight text-balance mb-6 text-foreground">
+            <h1 className="font-serif text-5xl md:text-7xl font-bold leading-tight text-balance mb-6 text-white">
               Experiences That Inspire
             </h1>
           </ScrollAnimation>
 
           <ScrollAnimation type="slideUp" delay={200}>
-            <p className="text-lg md:text-xl font-light leading-relaxed max-w-2xl mx-auto mb-8 text-foreground">
+            <p className="text-lg md:text-xl font-light leading-relaxed max-w-2xl mx-auto mb-8 text-white">
               Premium tent setup and event management services that redefine quality, safety, and elegance. From concept
               to execution, we create unforgettable moments.
             </p>
@@ -42,6 +39,9 @@ export default function Home() {
           </ScrollAnimation>
         </div>
       </section>
+
+      {/* Event Carousel Section */}
+      <EventCarousel />
 
       {/* Services Section */}
       <section className="py-24 bg-background">
@@ -61,16 +61,17 @@ export default function Home() {
               {
                 title: "Wedding Tents",
                 description:
-                  "Elegant tent setups designed to match your wedding theme, complete with interior and exterior styling.",
+                  "Elegant tent setups designed to match your wedding theme, complete with interior and exterior styling. From intimate gatherings to grand celebrations, we bring your vision to life.",
               },
               {
                 title: "Corporate Events",
                 description:
-                  "Professional tent solutions for conferences, product launches, and corporate celebrations.",
+                  "Professional tent solutions for conferences, product launches, and corporate celebrations. Seamless coordination ensuring your event runs flawlessly.",
               },
               {
                 title: "Ramadan & Celebrations",
-                description: "Culturally inspired designs for Iftar gatherings, banquets, and special occasion tents.",
+                description:
+                  "Culturally inspired designs for Iftar gatherings, banquets, and special occasion tents. Honoring traditions with modern elegance.",
               },
             ].map((service, idx) => (
               <ScrollAnimation key={idx} type="slideUp" delay={idx * 150}>

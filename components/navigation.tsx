@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useState } from "react"
+import { LanguageSwitcher } from "./language-switcher"
 
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -10,12 +11,8 @@ export function Navigation() {
     <nav className="fixed top-0 w-full bg-background/95 backdrop-blur-sm z-50 border-b border-border">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link
-            href="/"
-            className="text-lg font-serif font-bold tracking-tight text-foreground hover:text-accent transition-colors"
-          >
-            VIP
+          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <img src="/value-in-pass-logo.png" alt="Value In Pass" className="h-10 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -29,6 +26,7 @@ export function Navigation() {
             <Link href="/contact" className="text-sm font-medium text-foreground hover:text-accent transition-colors">
               Contact
             </Link>
+            <LanguageSwitcher />
           </div>
 
           {/* Mobile Menu Button */}
@@ -66,6 +64,7 @@ export function Navigation() {
             >
               Contact
             </Link>
+            <LanguageSwitcher />
           </div>
         )}
       </div>

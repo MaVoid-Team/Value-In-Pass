@@ -14,15 +14,29 @@ export default function Contact() {
     message: "",
   })
   const [submitted, setSubmitted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    // Handle form submission here
-    setSubmitted(true)
-    setTimeout(() => {
-      setFormData({ name: "", email: "", message: "" })
-      setSubmitted(false)
-    }, 3000)
+    setIsLoading(true)
+
+    try {
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      })
+
+      if (response.ok) {
+        setSubmitted(true)
+        setFormData({ name: "", email: "", message: "" })
+        setTimeout(() => setSubmitted(false), 3000)
+      }
+    } catch (error) {
+      console.error("Error sending email:", error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -78,10 +92,10 @@ export default function Contact() {
                   <h4 className="font-medium text-foreground mb-2">Email</h4>
                   <div className="space-y-1">
                     <a
-                      href="mailto:info@valueinpass.com"
+                      href="mailto:z.ahmed@mavoid.com"
                       className="block text-foreground/70 hover:text-accent transition-colors"
                     >
-                      info@valueinpass.com
+                      z.ahmed@mavoid.com
                     </a>
                   </div>
                 </div>
@@ -152,9 +166,10 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  className="w-full px-8 py-4 bg-accent text-accent-foreground font-medium hover:bg-accent/90 transition-all duration-300 hover:scale-105"
+                  disabled={isLoading}
+                  className="w-full px-8 py-4 bg-accent text-accent-foreground font-medium hover:bg-accent/90 transition-all duration-300 hover:scale-105 disabled:opacity-50"
                 >
-                  {submitted ? "Message Sent!" : "Send Message"}
+                  {isLoading ? "Sending..." : submitted ? "Message Sent!" : "Send Message"}
                 </button>
               </form>
             </ScrollAnimation>
@@ -195,7 +210,7 @@ export default function Contact() {
             <div>
               <h4 className="font-medium mb-4 text-sm">Get In Touch</h4>
               <p className="text-background/80 text-sm mb-2">+20 111 6459994</p>
-              <p className="text-background/80 text-sm">info@valueinpass.com</p>
+              <p className="text-background/80 text-sm">z.ahmed@mavoid.com</p>
             </div>
           </div>
           <div className="border-t border-background/20 pt-8 text-center text-sm text-background/60">

@@ -1,11 +1,12 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter, Lora } from "next/font/google"
+import { Inter, Lora, Cairo } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 const lora = Lora({ subsets: ["latin"], variable: "--font-serif" })
+const cairo = Cairo({ subsets: ["arabic"], variable: "--font-arabic" })
 
 export const metadata: Metadata = {
   title: "Value In Pass | Premium Event & Tent Solutions",
@@ -42,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${lora.variable}`}>
+    <html lang="en" className={`${inter.variable} ${lora.variable} ${cairo.variable}`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
         <meta name="theme-color" content="#faf8f3" />
