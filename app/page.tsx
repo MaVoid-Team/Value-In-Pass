@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Navigation } from "@/components/navigation"
 import { ScrollAnimation } from "@/components/scroll-animation"
 import { EventCarousel } from "@/components/event-carousel"
+import { HeroCarousel } from "@/components/hero-carousel"
 
 export default function Home() {
   return (
@@ -10,12 +11,9 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative w-full h-screen flex items-center justify-center pt-20">
-        <div className="absolute inset-0 -z-10">
-          <img src="/hero-luxury-events.jpg" alt="Luxury tent event setup" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/50"></div>
-        </div>
+        <HeroCarousel />
 
-        <div className="max-w-4xl mx-auto px-6 text-center">
+        <div className="max-w-4xl mx-auto px-6 text-center relative" style={{ zIndex: 10 }}>
           <ScrollAnimation type="fadeIn">
             <h1 className="font-serif text-5xl md:text-7xl font-bold leading-tight text-balance mb-6 text-white">
               Experiences That Inspire

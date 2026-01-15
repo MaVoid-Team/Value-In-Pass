@@ -12,9 +12,9 @@ interface CarouselSlide {
 }
 
 export function EventCarousel() {
-  const [scrollPosition, setScrollPosition] = useState(0)
-  const [canScrollRight, setCanScrollRight] = useState(true)
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isHovered, setIsHovered] = useState(false)
+  const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
   const slides: CarouselSlide[] = [
     {
@@ -55,27 +55,33 @@ export function EventCarousel() {
   ]
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (scrollContainerRef.current) {
-        const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current
-        setScrollPosition(scrollLeft)
-        setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10)
+    if (!isHovered) {
+      intervalRef.current = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % slides.length)
+      }, 4000)
+    } else {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
       }
     }
 
-    const container = scrollContainerRef.current
-    container?.addEventListener("scroll", handleScroll)
-    return () => container?.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  const scroll = (direction: "left" | "right") => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = 400
-      scrollContainerRef.current.scrollBy({
-        left: direction === "right" ? scrollAmount : -scrollAmount,
-        behavior: "smooth",
-      })
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
     }
+  }, [isHovered, slides.length])
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index)
+  }
+
+  const goToPrevious = () => {
+    setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length)
+  }
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % slides.length)
   }
 
   return (
@@ -91,72 +97,104 @@ export function EventCarousel() {
           <div className="w-12 h-1 bg-accent mb-12"></div>
         </ScrollAnimation>
 
-        <div className="relative">
-          <div
-            ref={scrollContainerRef}
-            className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4"
-            style={{
-              scrollBehavior: "smooth",
-              scrollSnapType: "x mandatory",
-            }}
-          >
-            {slides.map((slide) => (
-              <ScrollAnimation key={slide.id} type="slideUp" delay={slide.id * 50}>
+        <div
+          className="relative"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          {/* Main Carousel Container */}
+          <div className="relative overflow-hidden rounded-2xl">
+            <div
+              className="flex transition-transform duration-700 ease-in-out"
+              style={{
+                transform: `translateX(-${currentIndex * 100}%)`,
+              }}
+            >
+              {slides.map((slide) => (
                 <div
-                  className="flex-shrink-0 w-96 snap-start group cursor-pointer"
-                  style={{ scrollSnapAlign: "start" }}
+                  key={slide.id}
+                  className="min-w-full relative group"
                 >
-                  <div className="relative h-64 overflow-hidden bg-secondary rounded-lg">
+                  <div className="relative h-[500px] md:h-[600px] overflow-hidden">
                     <img
                       src={slide.image || "/placeholder.svg"}
                       alt={slide.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300"></div>
-                  </div>
-
-                  <div className="pt-4">
-                    <p className="text-accent text-sm font-medium tracking-wide mb-2">
-                      {slide.category.toUpperCase()} • {slide.location}
-                    </p>
-                    <h3 className="font-serif text-xl font-bold text-foreground group-hover:text-accent transition-colors">
-                      {slide.title}
-                    </h3>
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                    
+                    {/* Content Overlay */}
+                    <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12">
+                      <div className="max-w-3xl">
+                        <p className="text-white/80 text-sm md:text-base font-medium tracking-wider mb-3 uppercase">
+                          {slide.category} • {slide.location}
+                        </p>
+                        <h3 className="font-serif text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">
+                          {slide.title}
+                        </h3>
+                        <div className="w-16 h-0.5 bg-accent"></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </ScrollAnimation>
+              ))}
+            </div>
+
+            {/* Navigation Arrows */}
+            <button
+              onClick={goToPrevious}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 group"
+              aria-label="Previous slide"
+            >
+              <svg
+                className="w-6 h-6 md:w-7 md:h-7 group-hover:-translate-x-1 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            <button
+              onClick={goToNext}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 group"
+              aria-label="Next slide"
+            >
+              <svg
+                className="w-6 h-6 md:w-7 md:h-7 group-hover:translate-x-1 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Pagination Dots */}
+          <div className="flex justify-center items-center gap-3 mt-8">
+            {slides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`transition-all duration-300 rounded-full ${
+                  index === currentIndex
+                    ? "w-10 h-2 bg-accent"
+                    : "w-2 h-2 bg-accent/30 hover:bg-accent/50"
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
             ))}
           </div>
 
-          <button
-            onClick={() => scroll("left")}
-            className="absolute -left-16 top-1/3 -translate-y-1/2 hidden lg:flex items-center justify-center w-10 h-10 rounded-full border border-accent/40 text-accent hover:bg-accent/10 transition-all duration-300"
-            aria-label="Scroll left"
-          >
-            ←
-          </button>
-
-          <button
-            onClick={() => scroll("right")}
-            disabled={!canScrollRight}
-            className="absolute -right-16 top-1/3 -translate-y-1/2 hidden lg:flex items-center justify-center w-10 h-10 rounded-full border border-accent/40 text-accent hover:bg-accent/10 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
-            aria-label="Scroll right"
-          >
-            →
-          </button>
-        </div>
-
-        {/* Mobile scroll indicator */}
-        <div className="flex justify-center gap-1 mt-8 lg:hidden">
-          {slides.map((_, idx) => (
-            <div
-              key={idx}
-              className="h-1 rounded-full bg-accent/40 transition-all"
-              style={{
-                width: idx === Math.floor(scrollPosition / 100) % slides.length ? "24px" : "8px",
-              }}
-            />
-          ))}
+          {/* Slide Counter */}
+          <div className="absolute top-6 right-6 z-10 px-4 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/10">
+            <span className="text-white text-sm font-medium">
+              {currentIndex + 1} / {slides.length}
+            </span>
+          </div>
         </div>
       </div>
     </section>

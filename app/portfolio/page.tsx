@@ -1,17 +1,7 @@
 import Link from "next/link"
 import { Navigation } from "@/components/navigation"
 import { ScrollAnimation } from "@/components/scroll-animation"
-
-const portfolioProjects = [
-  { type: "WEDDING", location: "Dubai, UAE", title: "Wedding Tent" },
-  { type: "FIFA", location: "Al Ain, UAE", title: "Championship Tent" },
-  { type: "RAMADAN", location: "Abu Dhabi, UAE", title: "Ramadan Tent" },
-  { type: "DESERT", location: "Al Ain, UAE", title: "Desert Party Tent" },
-  { type: "WEDDING", location: "Al Ain, UAE", title: "Desert Wedding Setup" },
-  { type: "CELEBRATION", location: "Dubai, UAE", title: "New Year Themed Tent" },
-  { type: "BANQUET", location: "Al Zaeem, UAE", title: "Al Zaeem Village Tent" },
-  { type: "RAMADAN", location: "Al Ain, UAE", title: "Iftar Gathering" },
-]
+import { portfolioProjects } from "@/lib/portfolio-data"
 
 export default function Portfolio() {
   return (
@@ -42,11 +32,11 @@ export default function Portfolio() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {portfolioProjects.map((project, idx) => (
-              <ScrollAnimation key={idx} type="slideUp" delay={(idx % 3) * 100}>
-                <div className="group cursor-pointer">
-                  <div className="relative overflow-hidden h-80 mb-6 bg-secondary">
+              <ScrollAnimation key={project.id} type="slideUp" delay={(idx % 3) * 100}>
+                <Link href={`/portfolio/${project.id}`} className="group block cursor-pointer">
+                  <div className="relative overflow-hidden h-80 mb-6 bg-secondary rounded-lg">
                     <img
-                      src={`/.jpg?key=guxeo&height=400&width=400&query=${encodeURIComponent(project.title + " " + project.type + " luxury tent event setup")}`}
+                      src={project.image}
                       alt={project.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
@@ -60,7 +50,7 @@ export default function Portfolio() {
                       {project.title}
                     </h3>
                   </div>
-                </div>
+                </Link>
               </ScrollAnimation>
             ))}
           </div>
