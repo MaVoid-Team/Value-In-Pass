@@ -1,39 +1,44 @@
 "use client"
 
-import type React from "react"
-
 import Link from "next/link"
 import { Navigation } from "@/components/navigation"
 import { ScrollAnimation } from "@/components/scroll-animation"
-import { type FormEvent, useState } from "react"
+import { useState, FormEvent } from "react"
 
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   })
   const [submitted, setSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("")
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsLoading(true)
+    setError("")
 
     try {
-      const response = await fetch("/api/send-email", {
+      const response = await fetch("https://formspree.io/f/maqqnapg", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(formData),
       })
 
       if (response.ok) {
         setSubmitted(true)
-        setFormData({ name: "", email: "", message: "" })
-        setTimeout(() => setSubmitted(false), 3000)
+        setFormData({ name: "", email: "", phone: "", message: "" })
+        setTimeout(() => setSubmitted(false), 5000)
+      } else {
+        setError("Something went wrong. Please try again.")
       }
     } catch (error) {
-      console.error("Error sending email:", error)
+      setError("Failed to send message. Please try again.")
     } finally {
       setIsLoading(false)
     }
@@ -46,7 +51,6 @@ export default function Contact() {
       [name]: value,
     }))
   }
-
   return (
     <main className="min-h-screen bg-background">
       <Navigation />
@@ -83,7 +87,7 @@ export default function Contact() {
 
                 <div>
                   <h4 className="font-medium text-foreground mb-2">Phone</h4>
-                  <a href="tel:+201116459994" className="text-foreground/70 hover:text-accent transition-colors">
+                  <a href="tel:+20 11 25471849" className="text-foreground/70 hover:text-accent transition-colors">
                     +20 111 6459994
                   </a>
                 </div>
@@ -92,10 +96,10 @@ export default function Contact() {
                   <h4 className="font-medium text-foreground mb-2">Email</h4>
                   <div className="space-y-1">
                     <a
-                      href="mailto:z.ahmed@mavoid.com"
+                      href="mailto:info@valueinpass.net"
                       className="block text-foreground/70 hover:text-accent transition-colors"
                     >
-                      z.ahmed@mavoid.com
+                      info@valueinpass.net
                     </a>
                   </div>
                 </div>
@@ -115,63 +119,90 @@ export default function Contact() {
 
             {/* Contact Form */}
             <ScrollAnimation type="slideUp" delay={200}>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 bg-secondary border border-border text-foreground placeholder:text-foreground/40 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background transition-all"
-                    placeholder="Your name"
-                  />
-                </div>
+              <div className="w-full">
+                <h3 className="font-serif text-2xl font-bold text-foreground mb-4">Send Us a Message</h3>
+                <div className="w-8 h-0.5 bg-accent mb-6"></div>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                      Full Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 bg-secondary border border-border text-foreground placeholder:text-foreground/40 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background transition-all"
+                      placeholder="Your name"
+                    />
+                  </div>
 
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 bg-secondary border border-border text-foreground placeholder:text-foreground/40 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background transition-all"
-                    placeholder="your@email.com"
-                  />
-                </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 bg-secondary border border-border text-foreground placeholder:text-foreground/40 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background transition-all"
+                      placeholder="your@email.com"
+                    />
+                  </div>
 
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={6}
-                    className="w-full px-4 py-3 bg-secondary border border-border text-foreground placeholder:text-foreground/40 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background transition-all resize-none"
-                    placeholder="Tell us about your event..."
-                  ></textarea>
-                </div>
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 bg-secondary border border-border text-foreground placeholder:text-foreground/40 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background transition-all"
+                      placeholder="+20 111 6459994"
+                    />
+                  </div>
 
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full px-8 py-4 bg-accent text-accent-foreground font-medium hover:bg-accent/90 transition-all duration-300 hover:scale-105 disabled:opacity-50"
-                >
-                  {isLoading ? "Sending..." : submitted ? "Message Sent!" : "Send Message"}
-                </button>
-              </form>
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
+                      Message
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      rows={6}
+                      className="w-full px-4 py-3 bg-secondary border border-border text-foreground placeholder:text-foreground/40 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background transition-all resize-none"
+                      placeholder="Tell us about your event..."
+                    ></textarea>
+                  </div>
+
+                  {error && (
+                    <div className="text-red-600 text-sm">{error}</div>
+                  )}
+
+                  {submitted && (
+                    <div className="text-green-600 text-sm">Thank you! Your message has been sent successfully.</div>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full px-8 py-4 bg-accent text-accent-foreground font-medium hover:bg-accent/90 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isLoading ? "Sending..." : submitted ? "Message Sent!" : "Send Message"}
+                  </button>
+                </form>
+              </div>
             </ScrollAnimation>
           </div>
         </div>
@@ -210,7 +241,7 @@ export default function Contact() {
             <div>
               <h4 className="font-medium mb-4 text-sm">Get In Touch</h4>
               <p className="text-background/80 text-sm mb-2">+20 111 6459994</p>
-              <p className="text-background/80 text-sm">z.ahmed@mavoid.com</p>
+              <p className="text-background/80 text-sm">info@valueinpass.net</p>
             </div>
           </div>
           <div className="border-t border-background/20 pt-8 text-center text-sm text-background/60">

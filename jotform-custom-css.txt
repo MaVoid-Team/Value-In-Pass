@@ -1,0 +1,153 @@
+/* Value In Pass Contact Form Custom Styling */
+
+/* Form Container */
+.form-all {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: transparent !important;
+  padding: 0 !important;
+  max-width: 100% !important;
+}
+
+/* Form Header - Hide if you want to use your own title */
+.form-header {
+  display: none !important;
+}
+
+/* Form Title */
+.form-label {
+  font-family: 'Lora', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333333;
+  margin-bottom: 1rem;
+}
+
+/* Input Fields Container */
+.form-line {
+  margin-bottom: 1.5rem;
+}
+
+/* Labels */
+.form-label-top,
+.form-label-left,
+.form-label-right {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #333333;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* Text Inputs and Textareas */
+.form-textbox,
+.form-textarea {
+  width: 100% !important;
+  padding: 0.75rem 1rem !important;
+  background-color: #EBEBEB !important;
+  border: 1px solid #EBEBEB !important;
+  color: #333333 !important;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 1rem;
+  border-radius: 0;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-textbox::placeholder,
+.form-textarea::placeholder {
+  color: rgba(51, 51, 51, 0.4) !important;
+}
+
+/* Focus States */
+.form-textbox:focus,
+.form-textarea:focus {
+  outline: none !important;
+  border-color: #EBEBEB !important;
+  box-shadow: 0 0 0 2px rgba(139, 92, 60, 0.5) !important;
+  background-color: #EBEBEB !important;
+}
+
+/* Textarea Specific */
+.form-textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+/* Submit Button */
+.form-submit-button {
+  width: 100% !important;
+  padding: 1rem 2rem !important;
+  background-color: #8B5C3C !important;
+  color: #FAF8F3 !important;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none !important;
+  border-radius: 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+.form-submit-button:hover {
+  background-color: rgba(139, 92, 60, 0.9) !important;
+  transform: scale(1.02);
+}
+
+.form-submit-button:active {
+  transform: scale(0.98);
+}
+
+/* Error Messages */
+.form-error-message {
+  color: #DC2626;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Success Message */
+.form-success-message {
+  color: #059669;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+/* Required Field Indicator */
+.form-label-required {
+  color: #DC2626;
+}
+
+/* Hide JotForm Branding */
+.jotform-branding {
+  display: none !important;
+}
+
+/* Phone Number Field */
+.form-phone {
+  width: 100% !important;
+}
+
+/* Email Field */
+.form-email {
+  width: 100% !important;
+}
+
+/* Remove default JotForm styling */
+.form-all * {
+  box-sizing: border-box;
+}
+
+/* Spacing adjustments */
+.form-line.form-line-column {
+  margin-bottom: 1.5rem;
+}
+
+/* Make sure inputs are full width */
+.form-input,
+.form-dropdown,
+.form-radio,
+.form-checkbox {
+  width: 100% !important;
+}
