@@ -3,8 +3,10 @@
 import Link from "next/link"
 import { useState } from "react"
 import { LanguageSwitcher } from "./language-switcher"
+import { useLanguage } from "./language-provider"
 
 export function Navigation() {
+  const { t } = useLanguage()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
@@ -12,19 +14,22 @@ export function Navigation() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <img src="/value-in-pass-logo.png" alt="Value In Pass" className="h-10 w-auto" />
+            <img src="/value-in-pass-logo.png" alt="Value In Pass" className="h-14 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-12">
             <Link href="/" className="text-sm font-medium text-foreground hover:text-accent transition-colors">
-              Home
+              {t('home')}
+            </Link>
+            <Link href="/services" className="text-sm font-medium text-foreground hover:text-accent transition-colors">
+              {t('services')}
             </Link>
             <Link href="/portfolio" className="text-sm font-medium text-foreground hover:text-accent transition-colors">
-              Portfolio
+              {t('portfolio')}
             </Link>
             <Link href="/contact" className="text-sm font-medium text-foreground hover:text-accent transition-colors">
-              Contact
+              {t('contact')}
             </Link>
             <LanguageSwitcher />
           </div>
@@ -50,19 +55,25 @@ export function Navigation() {
         {mobileMenuOpen && (
           <div className="md:hidden mt-6 pb-4 space-y-4 border-t border-border pt-4">
             <Link href="/" className="block text-sm font-medium text-foreground hover:text-accent transition-colors">
-              Home
+              {t('home')}
+            </Link>
+            <Link
+              href="/services"
+              className="block text-sm font-medium text-foreground hover:text-accent transition-colors"
+            >
+              {t('services')}
             </Link>
             <Link
               href="/portfolio"
               className="block text-sm font-medium text-foreground hover:text-accent transition-colors"
             >
-              Portfolio
+              {t('portfolio')}
             </Link>
             <Link
               href="/contact"
               className="block text-sm font-medium text-foreground hover:text-accent transition-colors"
             >
-              Contact
+              {t('contact')}
             </Link>
             <LanguageSwitcher />
           </div>

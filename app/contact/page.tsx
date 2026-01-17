@@ -4,8 +4,10 @@ import Link from "next/link"
 import { Navigation } from "@/components/navigation"
 import { ScrollAnimation } from "@/components/scroll-animation"
 import { useState, FormEvent } from "react"
+import { useLanguage } from "@/components/language-provider"
 
 export default function Contact() {
+  const { t, language } = useLanguage()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -35,10 +37,10 @@ export default function Contact() {
         setFormData({ name: "", email: "", phone: "", message: "" })
         setTimeout(() => setSubmitted(false), 5000)
       } else {
-        setError("Something went wrong. Please try again.")
+        setError(t('error'))
       }
     } catch (error) {
-      setError("Failed to send message. Please try again.")
+      setError(t('failed'))
     } finally {
       setIsLoading(false)
     }
@@ -53,14 +55,22 @@ export default function Contact() {
   }
   return (
     <main className="min-h-screen bg-background">
-      <Navigation />
+      {/* Back Button */}
+      <div className={`fixed top-4 md:top-6 z-50 ${language === 'ar' ? 'right-4 md:right-6' : 'left-4 md:left-6'}`}>
+        <Link
+          href="/"
+          className="flex items-center gap-2 px-4 py-2 bg-background/80 backdrop-blur-sm rounded-full border border-border/50 text-sm font-medium hover:bg-accent hover:text-accent-foreground transition-all duration-300 shadow-sm"
+        >
+          <span className={language === 'ar' ? 'rotate-180' : ''}>←</span> {t('back')}
+        </Link>
+      </div>
 
       {/* Hero Section */}
       <section className="pt-32 pb-16 bg-background">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <ScrollAnimation type="slideUp">
             <h1 className="font-serif text-5xl md:text-6xl font-bold text-foreground mb-6 text-balance">
-              Get In Touch
+              {t('getInTouch')}
             </h1>
           </ScrollAnimation>
 
@@ -81,19 +91,19 @@ export default function Contact() {
             <ScrollAnimation type="slideUp">
               <div className="space-y-12">
                 <div>
-                  <h3 className="font-serif text-2xl font-bold text-foreground mb-4">Contact Information</h3>
+                  <h3 className="font-serif text-2xl font-bold text-foreground mb-4">{t('contactInfo')}</h3>
                   <div className="w-8 h-0.5 bg-accent mb-6"></div>
                 </div>
 
                 <div>
-                  <h4 className="font-medium text-foreground mb-2">Phone</h4>
+                  <h4 className="font-medium text-foreground mb-2">{t('phone')}</h4>
                   <a href="tel:+20 11 25471849" className="text-foreground/70 hover:text-accent transition-colors">
-                    +20 111 6459994
+                    +20 11 25471849
                   </a>
                 </div>
 
                 <div>
-                  <h4 className="font-medium text-foreground mb-2">Email</h4>
+                  <h4 className="font-medium text-foreground mb-2">{t('email')}</h4>
                   <div className="space-y-1">
                     <a
                       href="mailto:info@valueinpass.net"
@@ -105,13 +115,13 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <h4 className="font-medium text-foreground mb-2">Operating Regions</h4>
-                  <p className="text-foreground/70">United Arab Emirates & Egypt</p>
+                  <h4 className="font-medium text-foreground mb-2">{t('operatingRegions')}</h4>
+                  <p className="text-foreground/70">{t('regions')}</p>
                 </div>
 
                 <div className="pt-8 border-t border-border">
                   <p className="text-sm text-foreground/60">
-                    We typically respond within 24 hours during business days.
+                    {t('responseTime')}
                   </p>
                 </div>
               </div>
@@ -120,12 +130,12 @@ export default function Contact() {
             {/* Contact Form */}
             <ScrollAnimation type="slideUp" delay={200}>
               <div className="w-full">
-                <h3 className="font-serif text-2xl font-bold text-foreground mb-4">Send Us a Message</h3>
+                <h3 className="font-serif text-2xl font-bold text-foreground mb-4">{t('sendMessage')}</h3>
                 <div className="w-8 h-0.5 bg-accent mb-6"></div>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
-                      Full Name
+                      {t('fullName')}
                     </label>
                     <input
                       type="text"
@@ -135,13 +145,13 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 bg-secondary border border-border text-foreground placeholder:text-foreground/40 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background transition-all"
-                      placeholder="Your name"
+                      placeholder={t('fullName')}
                     />
                   </div>
 
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                      Email Address
+                      {t('emailAddress')}
                     </label>
                     <input
                       type="email"
@@ -157,7 +167,7 @@ export default function Contact() {
 
                   <div>
                     <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
-                      Phone Number
+                      {t('phoneNumber')}
                     </label>
                     <input
                       type="tel"
@@ -165,14 +175,15 @@ export default function Contact() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 bg-secondary border border-border text-foreground placeholder:text-foreground/40 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background transition-all"
-                      placeholder="+20 111 6459994"
+                      className="w-full px-4 py-3 bg-secondary border border-border text-foreground placeholder:text-foreground/40 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background transition-all text-left"
+                      dir="ltr"
+                      placeholder="+20 11 25471849"
                     />
                   </div>
 
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
-                      Message
+                      {t('message')}
                     </label>
                     <textarea
                       id="message"
@@ -182,7 +193,6 @@ export default function Contact() {
                       required
                       rows={6}
                       className="w-full px-4 py-3 bg-secondary border border-border text-foreground placeholder:text-foreground/40 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-background transition-all resize-none"
-                      placeholder="Tell us about your event..."
                     ></textarea>
                   </div>
 
@@ -191,7 +201,7 @@ export default function Contact() {
                   )}
 
                   {submitted && (
-                    <div className="text-green-600 text-sm">Thank you! Your message has been sent successfully.</div>
+                    <div className="text-green-600 text-sm">{t('success')}</div>
                   )}
 
                   <button
@@ -199,7 +209,7 @@ export default function Contact() {
                     disabled={isLoading}
                     className="w-full px-8 py-4 bg-accent text-accent-foreground font-medium hover:bg-accent/90 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {isLoading ? "Sending..." : submitted ? "Message Sent!" : "Send Message"}
+                    {isLoading ? t('sending') : submitted ? t('messageSent') : t('sendBtn')}
                   </button>
                 </form>
               </div>
@@ -215,37 +225,37 @@ export default function Contact() {
             <div>
               <h3 className="font-serif text-lg font-bold mb-4">Value In Pass</h3>
               <p className="text-background/80 text-sm leading-relaxed">
-                Premium event and tent solutions across UAE and Egypt.
+                {t('premiumSolutions')}
               </p>
             </div>
             <div>
-              <h4 className="font-medium mb-4 text-sm">Quick Links</h4>
+              <h4 className="font-medium mb-4 text-sm">{t('quickLinks')}</h4>
               <ul className="space-y-2 text-sm text-background/80">
                 <li>
                   <Link href="/" className="hover:text-background transition-colors">
-                    Home
+                    {t('home')}
                   </Link>
                 </li>
                 <li>
                   <Link href="/portfolio" className="hover:text-background transition-colors">
-                    Portfolio
+                    {t('portfolio')}
                   </Link>
                 </li>
                 <li>
                   <Link href="/contact" className="hover:text-background transition-colors">
-                    Contact
+                    {t('contact')}
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="font-medium mb-4 text-sm">Get In Touch</h4>
-              <p className="text-background/80 text-sm mb-2">+20 111 6459994</p>
+              <h4 className="font-medium mb-4 text-sm">{t('getInTouch')}</h4>
+              <p className="text-background/80 text-sm mb-2" dir="ltr">+20 11 25471849</p>
               <p className="text-background/80 text-sm">info@valueinpass.net</p>
             </div>
           </div>
           <div className="border-t border-background/20 pt-8 text-center text-sm text-background/60">
-            <p>&copy; 2025 Value In Pass. All rights reserved.</p>
+            <p>{t('rightsReserved')}</p>
           </div>
         </div>
       </footer>

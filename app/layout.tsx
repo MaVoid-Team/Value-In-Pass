@@ -29,6 +29,8 @@ export const metadata: Metadata = {
   },
 }
 
+import { LanguageProvider } from "@/components/language-provider"
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -42,7 +44,9 @@ export default function RootLayout({
         <meta name="theme-color" content="#faf8f3" />
       </head>
       <body className={`font-sans antialiased`}>
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
         <Analytics />
       </body>
     </html>

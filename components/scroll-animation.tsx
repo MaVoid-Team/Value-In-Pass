@@ -7,9 +7,10 @@ interface ScrollAnimationProps {
   children: ReactNode
   type?: "fadeIn" | "slideUp" | "softScale"
   delay?: number
+  className?: string
 }
 
-export function ScrollAnimation({ children, type = "slideUp", delay = 0 }: ScrollAnimationProps) {
+export function ScrollAnimation({ children, type = "slideUp", delay = 0, className = "" }: ScrollAnimationProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
 
@@ -38,7 +39,11 @@ export function ScrollAnimation({ children, type = "slideUp", delay = 0 }: Scrol
   }[type]
 
   return (
-    <div ref={ref} className={isVisible ? animationClass : "opacity-0"} style={{ transitionDuration: "600ms" }}>
+    <div
+      ref={ref}
+      className={`${isVisible ? animationClass : "opacity-0"} ${className}`}
+      style={{ transitionDuration: "600ms" }}
+    >
       {children}
     </div>
   )

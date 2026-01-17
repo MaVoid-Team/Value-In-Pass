@@ -1,10 +1,15 @@
+"use client"
+
 import Link from "next/link"
 import { Navigation } from "@/components/navigation"
 import { ScrollAnimation } from "@/components/scroll-animation"
 import { EventCarousel } from "@/components/event-carousel"
 import { HeroCarousel } from "@/components/hero-carousel"
+import { useLanguage } from "@/components/language-provider"
 
 export default function Home() {
+  const { t, language } = useLanguage()
+
   return (
     <main className="min-h-screen bg-background">
       <Navigation />
@@ -16,14 +21,13 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-6 text-center relative" style={{ zIndex: 10 }}>
           <ScrollAnimation type="fadeIn">
             <h1 className="font-serif text-5xl md:text-7xl font-bold leading-tight text-balance mb-6 text-white">
-              Experiences That Inspire
+              {t('heroTitle')}
             </h1>
           </ScrollAnimation>
 
           <ScrollAnimation type="slideUp" delay={200}>
             <p className="text-lg md:text-xl font-light leading-relaxed max-w-2xl mx-auto mb-8 text-white">
-              Premium tent setup and event management services that redefine quality, safety, and elegance. From concept
-              to execution, we create unforgettable moments.
+              {t('heroDesc')}
             </p>
           </ScrollAnimation>
 
@@ -32,7 +36,7 @@ export default function Home() {
               href="/portfolio"
               className="inline-block px-8 py-4 bg-accent text-accent-foreground font-medium hover:bg-accent/90 transition-all duration-300 hover:scale-105"
             >
-              View Our Work
+              {t('viewWork')}
             </Link>
           </ScrollAnimation>
         </div>
@@ -46,7 +50,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <ScrollAnimation type="slideUp">
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-4 text-balance">
-              Our Services
+              {t('ourServices')}
             </h2>
           </ScrollAnimation>
 
@@ -57,19 +61,16 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-12 mt-16">
             {[
               {
-                title: "Wedding Tents",
-                description:
-                  "Elegant tent setups designed to match your wedding theme, complete with interior and exterior styling. From intimate gatherings to grand celebrations, we bring your vision to life.",
+                title: t('weddingTents'),
+                description: t('weddingTentsDesc'),
               },
               {
-                title: "Corporate Events",
-                description:
-                  "Professional tent solutions for conferences, product launches, and corporate celebrations. Seamless coordination ensuring your event runs flawlessly.",
+                title: t('corporateEvents'),
+                description: t('corporateEventsDesc'),
               },
               {
-                title: "Ramadan & Celebrations",
-                description:
-                  "Culturally inspired designs for Iftar gatherings, banquets, and special occasion tents. Honoring traditions with modern elegance.",
+                title: t('ramadanEvents'),
+                description: t('ramadanEventsDesc'),
               },
             ].map((service, idx) => (
               <ScrollAnimation key={idx} type="slideUp" delay={idx * 150}>
@@ -91,30 +92,30 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <ScrollAnimation type="slideUp">
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-12 text-balance">
-              Featured Project
+              {t('featuredProject')}
             </h2>
           </ScrollAnimation>
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <ScrollAnimation type="slideUp">
-              <img src="/luxury-tent-event.jpg" alt="Featured tent project" className="w-full h-auto" />
+              <img src="/luxury-tent-event.jpg" alt={t('featuredProject')} className="w-full h-auto" />
             </ScrollAnimation>
 
             <ScrollAnimation type="slideUp" delay={200}>
               <div>
-                <p className="text-accent font-medium text-sm tracking-wide mb-4">WEDDING • DUBAI, UAE</p>
-                <h3 className="font-serif text-4xl font-bold text-foreground mb-6">Desert Wedding Elegance</h3>
+                <p className="text-accent font-medium text-sm tracking-wide mb-4" dir="ltr">
+                  {language === 'ar' ? "زفاف • دبي، الإمارات" : "WEDDING • DUBAI, UAE"}
+                </p>
+                <h3 className="font-serif text-4xl font-bold text-foreground mb-6">{t('projectTitle')}</h3>
                 <p className="text-foreground/70 leading-relaxed mb-8">
-                  A breathtaking oriental-designed tent for an intimate desert wedding, featuring premium interior
-                  styling and seamless coordination from locating and positioning to final decoration. Every detail
-                  crafted to perfection.
+                  {t('projectDesc')}
                 </p>
                 <Link
                   href="/portfolio"
                   className="inline-flex items-center gap-3 text-accent font-medium hover:gap-4 transition-all"
                 >
-                  Explore Portfolio
-                  <span>→</span>
+                  {t('explorePortfolio')}
+                  <span className={language === 'ar' ? 'rotate-180' : ''}>→</span>
                 </Link>
               </div>
             </ScrollAnimation>
@@ -127,16 +128,16 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <ScrollAnimation type="slideUp">
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-12 text-balance">
-              Our Process
+              {t('ourProcess')}
             </h2>
           </ScrollAnimation>
 
           <div className="grid md:grid-cols-4 gap-8">
             {[
-              { step: "01", title: "Location & Planning", description: "Locating and positioning the tent" },
-              { step: "02", title: "Structural Design", description: "Structural setup & design planning" },
-              { step: "03", title: "Construction", description: "Tent construction and setup" },
-              { step: "04", title: "Final Styling", description: "Decoration and final styling" },
+              { step: "01", title: t('process1Title'), description: t('process1Desc') },
+              { step: "02", title: t('process2Title'), description: t('process2Desc') },
+              { step: "03", title: t('process3Title'), description: t('process3Desc') },
+              { step: "04", title: t('process4Title'), description: t('process4Desc') },
             ].map((item, idx) => (
               <ScrollAnimation key={idx} type="slideUp" delay={idx * 100}>
                 <div>
@@ -155,13 +156,13 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-6 text-center">
           <ScrollAnimation type="slideUp">
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6 text-balance">
-              Ready to Create Your Next Experience?
+              {t('readyToCreate')}
             </h2>
           </ScrollAnimation>
 
           <ScrollAnimation type="slideUp" delay={200}>
             <p className="text-foreground/70 text-lg mb-8 leading-relaxed max-w-2xl mx-auto">
-              Let's bring your vision to life with premium tent solutions and dedicated event management.
+              {t('readyDesc')}
             </p>
           </ScrollAnimation>
 
@@ -170,7 +171,7 @@ export default function Home() {
               href="/contact"
               className="inline-block px-8 py-4 bg-accent text-accent-foreground font-medium hover:bg-accent/90 transition-all duration-300 hover:scale-105"
             >
-              Get In Touch
+              {t('getInTouch')}
             </Link>
           </ScrollAnimation>
         </div>
@@ -183,37 +184,42 @@ export default function Home() {
             <div>
               <h3 className="font-serif text-lg font-bold mb-4">Value In Pass</h3>
               <p className="text-background/80 text-sm leading-relaxed">
-                Premium event and tent solutions across UAE and Egypt.
+                {t('premiumSolutions')}
               </p>
             </div>
             <div>
-              <h4 className="font-medium mb-4 text-sm">Quick Links</h4>
+              <h4 className="font-medium mb-4 text-sm">{t('quickLinks')}</h4>
               <ul className="space-y-2 text-sm text-background/80">
                 <li>
                   <Link href="/" className="hover:text-background transition-colors">
-                    Home
+                    {t('home')}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/services" className="hover:text-background transition-colors">
+                    {t('services')}
                   </Link>
                 </li>
                 <li>
                   <Link href="/portfolio" className="hover:text-background transition-colors">
-                    Portfolio
+                    {t('portfolio')}
                   </Link>
                 </li>
                 <li>
                   <Link href="/contact" className="hover:text-background transition-colors">
-                    Contact
+                    {t('contact')}
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="font-medium mb-4 text-sm">Get In Touch</h4>
-              <p className="text-background/80 text-sm mb-2">+20 111 6459994</p>
+              <h4 className="font-medium mb-4 text-sm">{t('getInTouch')}</h4>
+              <p className="text-background/80 text-sm mb-2" dir="ltr">+20 11 25471849</p>
               <p className="text-background/80 text-sm">info@valueinpass.com</p>
             </div>
           </div>
           <div className="border-t border-background/20 pt-8 text-center text-sm text-background/60">
-            <p>&copy; 2025 Value In Pass. All rights reserved.</p>
+            <p>{t('rightsReserved')}</p>
           </div>
         </div>
       </footer>
