@@ -1,30 +1,27 @@
-# Corporate events website
+# Value In Pass
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+Premium tent setup and event management — weddings, corporate galas, Ramadan iftars, and festivals across the UAE and Egypt.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/ziadahmed252525-gmailcoms-projects/v0-corporate-events-website)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/bSRERROcHAY)
+For event planners and hosts who want elegant, safe tent experiences from location and structure through final styling.
 
-## Overview
+## What you can do
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+- Browse featured wedding, corporate, cultural, and festival setups
+- See service lines for wedding tents, corporate events, and Ramadan celebrations
+- Follow the four-step process from location planning to final decoration
+- Open a featured project case (e.g. desert wedding elegance)
+- Contact the team to plan the next event
 
-## Deployment
+## Try it
 
-Your project is live at:
+The live site: **[https://value-in-pass.vercel.app](https://value-in-pass.vercel.app)**
 
-**[https://vercel.com/ziadahmed252525-gmailcoms-projects/v0-corporate-events-website](https://vercel.com/ziadahmed252525-gmailcoms-projects/v0-corporate-events-website)**
+## How it works
 
-## Build your app
+A marketing site that walks visitors from inspiration (featured events) to process and contact. This is the public brand site — not an internal ops tool.
 
-Continue building your app on:
+---
 
-**[https://v0.app/chat/bSRERROcHAY](https://v0.app/chat/bSRERROcHAY)**
+Built by [Ziad Ahmed](https://github.com/Ziad-NasrEldin) at [MaVoid](https://mavoid.com).
 
-## How It Works
-
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+[Website](https://mavoid.com) · [LinkedIn](https://linkedin.com/in/ziad-ahmed-634202332) · [GitHub](https://github.com/Ziad-NasrEldin)
